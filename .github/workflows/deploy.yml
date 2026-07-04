@@ -27,7 +27,7 @@ jobs:
 
             echo "Connected to server"
 
-            cd /home/testbasicselfcom/farhan.test.basicself.com || exit
+            cd /home/testbasicselfcom/t1.test.basicself.com || exit
 
             echo "Current directory: $(pwd)"
             echo "Pulling latest code..."
