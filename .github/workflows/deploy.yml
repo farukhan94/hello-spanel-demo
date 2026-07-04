@@ -28,8 +28,7 @@ jobs:
             echo "Connected to server"
 
             # Go to your website directory (CHANGE THIS if needed)
-            cd /farhan.test.basicself.com/public_html || exit
-
+            cd /home/testbasicselfcom/farhan-demo.test.basicself.com/public_html || exit
             echo "Pulling latest code..."
 
             # If git repo already exists
