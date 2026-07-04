@@ -27,18 +27,19 @@ jobs:
 
             echo "Connected to server"
 
-            # CORRECT PATH - no public_html subfolder!
             cd /home/testbasicselfcom/farhan.test.basicself.com || exit
 
             echo "Current directory: $(pwd)"
             echo "Pulling latest code..."
 
-            # If git repo already exists
-            if [ -d ".git" ]; then
-              git pull origin main
-            else
-              git clone https://github.com/farukhan94/hello-spanel-demo.git .
+            # Initialize git repo if it doesn't exist, then pull
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://github.com/farukhan94/hello-spanel-demo.git
             fi
+
+            git fetch origin main
+            git reset --hard origin/main
 
             echo "Deployment complete"
             ls -la
