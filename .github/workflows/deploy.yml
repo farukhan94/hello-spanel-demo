@@ -1,0 +1,44 @@
+name: Deploy to SPanel via SSH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH tools
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy files to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST << 'EOF'
+
+            echo "Connected to server"
+
+            # Go to your website directory (CHANGE THIS if needed)
+            cd /farhan.test.basicself.com/public_html || exit
+
+            echo "Pulling latest code..."
+
+            # If git repo already exists
+            if [ -d ".git" ]; then
+              git pull origin main
+            else
+              git clone https://github.com/farukhan94/hello-spanel-demo.git .
+            fi
+
+            echo "Deployment complete"
+
+          EOF
